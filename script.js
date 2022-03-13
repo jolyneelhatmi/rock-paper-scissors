@@ -10,24 +10,74 @@ function playRound(playerSelection, computerSelection){
         return "draw!";
     }else if ((playerSelection === "rock" && computerSelection === "scissors")||(playerSelection=== "paper" && computerSelection === "rock")||(playerSelection==="scissors" && computerSelection === "paper"))
     {
-        return `You won! ${capitalize(playerSelection)} beats ${capitalize(computerSelection)}`;
+        return `You won! ${playerSelection} beats ${computerSelection}`;
     }else {
-        return `you lost! ${capitalize(computerSelection)} beats ${capitalize(playerSelection)}`;
+        return `you lost! ${computerSelection} beats ${playerSelection}`;
     }
-
 }
-const capitalize = (s) => {
+let container = document.querySelector("#container");
+container.addEventListener("click", choose, false);
+let p = 0;
+let c = 0;
+
+const results = document.querySelector("#results");
+function choose(e){
+    if(e.target !== e.currentTarget){
+        let choice = e.target.id;
+        
+        let computerSelection = computerPLay();
+        alert(playRound(choice, computerSelection));
+        
+        if (playRound(choice, computerSelection) === `you lost! ${computerSelection} beats ${choice}`){
+            c += 1;
+            const result = document.createElement('div');
+            result.classList.add('result');
+            result.textContent = "you :" + " " + p +" "+ "the pc :" + " " + c;
+            results.appendChild(result);
+            console.log(p,c);
+        } else if(playRound(choice, computerSelection) === `You won! ${choice} beats ${computerSelection}`){
+            p += 1;
+            const result = document.createElement('div');
+            result.classList.add('result');
+            result.textContent = "you :" + " " + p + " " +"the pc :" + " " + c;
+            results.appendChild(result);
+            console.log(p,c);
+        }
+
+        if (c === 5){
+            alert("radwan saghir");
+            const result = document.createElement('div');
+            result.classList.add('result');
+            result.textContent = "New set of rounds";
+            results.appendChild(result);
+            p = c = 0;
+        }
+        if (p === 5){
+            alert("You are the winner");
+            const result = document.createElement('div');
+            result.classList.add('result');
+            result.textContent = "New set of rounds";
+            results.appendChild(result);
+            p = c = 0;
+        }
+    }
+    e.stopPropagation();
+}
+
+/* const capitalize = (s) => {
     if (typeof s !== 'string') return ''
     return s.charAt(0).toUpperCase() + s.slice(1)
-}
+} */
 
-function game(){
+
+
+
+ /* function game(){
     let p = 0;
     let c = 0;
     
     for(let i=0; i<5; i++){
-        let computer = computerPLay();
-        let playerSelection = playerInput();
+        
         let x = playRound(playerSelection, computer);
         console.log(x);
         console.log(playerSelection, computer);
@@ -51,22 +101,29 @@ function game(){
     }else {
         return "draw";
     }
-}
+} */
 
-console.log(game());
 
-function playerInput(){
-    let correctplayer;
-     let player = prompt("what's your selection ?");
-     if((player.toLowerCase() == "rock")||(player.toLowerCase() == "paper")||(player.toLowerCase() =="scissors"))
-     {  
-        correctplayer = player.toLowerCase();
-     }else {
-        alert("wrong input");
-        playerInput();
-     }
-     return correctplayer;
-}
+/* const rock = document.querySelector('#rock');
+rock.addEventListener('click', () => alert(playRound("rock",computerSelection)));
+
+const paper = document.querySelector('#paper');
+rock.addEventListener('click', () => alert(playRound("paper",computerSelection)));
+
+
+const scissors = document.querySelector('#scissors');
+rock.addEventListener('click', () => alert(playRound("rock",computerSelection)));
+*/
+/* const results = document.querySelector('#results');
+let x = playRound(playerSelection, computerSelection);
+const result = document.createElement('div');
+result.classList.add('result');
+result.textContent = x;
+
+results.appendChild(result); */
+
+
+
 
 
 
